@@ -12,6 +12,7 @@ export interface ModalProps {
   children: React.ReactNode;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   className?: string;
+  hideHeader?: boolean;
 }
 
 export function Modal({
@@ -21,6 +22,7 @@ export function Modal({
   children,
   maxWidth = 'md',
   className,
+  hideHeader = false,
 }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -49,42 +51,45 @@ export function Modal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-fade-in"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       {/* Modal Container */}
       <div
         className={cn(
-          'relative w-full bg-[#FFFFFF] border border-[#121212] rounded-none shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto animate-slide-up',
+          'relative w-full bg-white border border-gray-100 rounded-3xl shadow-2xl p-6 sm:p-8 z-10 max-h-[92vh] overflow-y-auto animate-slide-up',
           maxWidthClasses[maxWidth],
           className
         )}
       >
-        <div className="flex items-center justify-between pb-4 border-b border-[#E8E3DA] mb-5">
-          {title ? (
-            <h3 className="text-[18px] font-bold text-[#121212] font-spartan tracking-[0.1em] uppercase">
-              {title}
-            </h3>
-          ) : (
-            <div />
-          )}
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-8 h-8 rounded-none border border-transparent hover:border-[#121212] flex items-center justify-center text-[#5E5A54] hover:text-[#121212] hover:bg-[#F3EFE8] transition-colors cursor-pointer"
-            aria-label="Close modal"
-          >
-            <X className="w-4 h-4" strokeWidth={1.5} />
-          </button>
-        </div>
+        {!hideHeader && (
+          <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-5">
+            {title ? (
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
+                {title}
+              </h3>
+            ) : (
+              <div />
+            )}
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full border border-gray-200 hover:border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-4 h-4" strokeWidth={2} />
+            </button>
+          </div>
+        )}
 
         <div>{children}</div>
       </div>
     </div>
   );
 }
+
 

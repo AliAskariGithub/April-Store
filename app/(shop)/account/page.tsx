@@ -20,8 +20,11 @@ import {
   Trash2,
   Check,
   CheckCircle2,
-  Phone
+  Phone,
+  Eye,
+  EyeOff
 } from 'lucide-react';
+
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -46,6 +49,7 @@ export default function AccountPage() {
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authName, setAuthName] = useState('');
+  const [showAuthPassword, setShowAuthPassword] = useState(false);
   const [authError, setAuthError] = useState('');
 
   const handleInlineAuth = async (e: React.FormEvent) => {
@@ -56,6 +60,17 @@ export default function AccountPage() {
       setAuthError('Please fill in both email and password.');
       return;
     }
+
+    if (authMode === 'register' && !authName.trim()) {
+      setAuthError('Please provide your full name.');
+      return;
+    }
+
+    if (authMode === 'register' && authPassword.length < 6) {
+      setAuthError('Password must be at least 6 characters long.');
+      return;
+    }
+
 
     try {
       if (authMode === 'signin') {
@@ -169,31 +184,38 @@ export default function AccountPage() {
   // If user is NOT logged in: Show the Sign In / Registration Screen
   if (!user) {
     return (
-      <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16 text-left">
+      <div className="max-w-md mx-auto px-4 sm:px-6 py-10 sm:py-16 text-left">
         <div className="bg-white border border-gray-100 rounded-3xl shadow-xl overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-gray-900 via-gray-950 to-gray-900 text-white p-6 sm:p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-[#FF5722]/25 rounded-full blur-2xl pointer-events-none" />
-            <div className="relative z-10 flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <span className="text-xl font-extrabold text-white">April</span>
-                  <span className="text-xl font-extrabold text-[#FF5722]">Store</span>
+          <div className="bg-gradient-to-br from-gray-950 via-[#18181B] to-gray-900 text-white p-6 sm:p-8 relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#FF5722]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#FF5722]/10 rounded-full blur-2xl pointer-events-none" />
+            
+            <div className="relative z-10 flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-[#FF5722] border border-white/15">
+                  <Sparkles className="w-4 h-4" />
                 </div>
-                <h1 className="text-xl sm:text-2xl font-extrabold text-white">
-                  {authMode === 'signin' ? 'Sign In to Your Account' : 'Create Customer Account'}
-                </h1>
-                <p className="text-xs text-gray-300 mt-1">
-                  Access orders, saved wishlist, and addresses.
-                </p>
-              </div>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#FF5722] shrink-0 border border-white/10">
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+                <div className="flex items-center tracking-tight font-extrabold text-xl">
+                  <span className="text-white">April</span>
+                  <span className="text-[#FF5722]">Store</span>
+                </div>
               </div>
             </div>
 
+            <div className="relative z-10 space-y-1">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                {authMode === 'signin' ? 'Welcome Back' : 'Create Your Account'}
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-300 font-normal leading-relaxed">
+                {authMode === 'signin'
+                  ? 'Sign in to access your orders, saved addresses, and style profile.'
+                  : 'Join April Store to unlock instant checkout, wishlist syncing, and order tracking.'}
+              </p>
+            </div>
+
             {/* Toggle Switch */}
-            <div className="flex bg-white/10 p-1 rounded-xl mt-6 border border-white/10">
+            <div className="relative z-10 flex bg-black/40 backdrop-blur-md p-1 rounded-xl mt-5 border border-white/10">
               <button
                 type="button"
                 onClick={() => {
@@ -225,12 +247,12 @@ export default function AccountPage() {
             </div>
           </div>
 
-          {/* Form */}
-          <div className="p-6 sm:p-8 space-y-4">
+          {/* Form Body */}
+          <div className="p-6 sm:p-8 space-y-4 bg-white">
             {authError && (
-              <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-xs text-red-700">
+              <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-xs text-red-700 animate-fade-in">
                 <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                <span>{authError}</span>
+                <span className="font-medium">{authError}</span>
               </div>
             )}
 
@@ -239,9 +261,9 @@ export default function AccountPage() {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 font-bold text-xs transition-colors shadow-2xs cursor-pointer"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-gray-800 font-bold text-xs sm:text-sm transition-all shadow-2xs hover:shadow-xs cursor-pointer group disabled:opacity-60"
             >
-              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -262,60 +284,95 @@ export default function AccountPage() {
               <span>Continue with Google</span>
             </button>
 
-            <div className="relative flex items-center justify-center my-3">
-              <div className="border-t border-gray-200 w-full" />
+            <div className="relative flex items-center justify-center my-2">
+              <div className="border-t border-gray-100 w-full" />
               <span className="bg-white px-3 text-[11px] text-gray-400 uppercase font-bold tracking-wider">
-                Or with Email
+                Or with email
               </span>
-              <div className="border-t border-gray-200 w-full" />
+              <div className="border-t border-gray-100 w-full" />
             </div>
 
-            <form onSubmit={handleInlineAuth} className="space-y-4">
+            <form onSubmit={handleInlineAuth} className="space-y-3.5">
               {authMode === 'register' && (
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Full Name <span className="text-[#FF5722]">*</span>
+                  </label>
                   <div className="relative">
                     <Input
                       type="text"
-                      placeholder="e.g. Alex Morgan"
+                      placeholder="e.g. Syed Ali Askari"
                       value={authName}
                       onChange={(e) => setAuthName(e.target.value)}
                       required={authMode === 'register'}
                       className="pl-10"
                     />
-                    <User className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <User className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Email Address</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  Email Address <span className="text-[#FF5722]">*</span>
+                </label>
                 <div className="relative">
                   <Input
                     type="email"
-                    placeholder="e.g. yourname@gmail.com"
+                    placeholder="name@example.com"
                     value={authEmail}
                     onChange={(e) => setAuthEmail(e.target.value)}
                     required
                     className="pl-10"
                   />
-                  <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Password</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-gray-700">
+                    Password <span className="text-[#FF5722]">*</span>
+                  </label>
+                  {authMode === 'signin' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        showToast.info(
+                          'Password Reset',
+                          'If you have an account, you can sign in with Google or contact support.'
+                        );
+                      }}
+                      className="text-[11px] font-semibold text-[#FF5722] hover:text-[#F4511E] transition-colors cursor-pointer"
+                    >
+                      Forgot password?
+                    </button>
+                  )}
+                </div>
                 <div className="relative">
                   <Input
-                    type="password"
+                    type={showAuthPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     value={authPassword}
                     onChange={(e) => setAuthPassword(e.target.value)}
                     required
-                    className="pl-10"
+                    className="pl-10 pr-10"
                   />
-                  <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <button
+                    type="button"
+                    onClick={() => setShowAuthPassword(!showAuthPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                    aria-label={showAuthPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showAuthPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
+                {authMode === 'register' && (
+                  <p className="text-[11px] text-gray-400 mt-1">
+                    Must be at least 6 characters long.
+                  </p>
+                )}
               </div>
 
               <div className="pt-2">
@@ -324,11 +381,60 @@ export default function AccountPage() {
                   variant="primary"
                   size="lg"
                   disabled={loading}
-                  className="w-full bg-[#FF5722] hover:bg-[#F4511E] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-[#FF5722]/20 cursor-pointer text-sm"
+                  className="w-full bg-[#FF5722] hover:bg-[#F4511E] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-[#FF5722]/20 cursor-pointer text-xs sm:text-sm transition-all"
                 >
-                  <span>{loading ? 'Authenticating...' : authMode === 'signin' ? 'Sign In with Email' : 'Register Account'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Authenticating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{authMode === 'signin' ? 'Sign In to April Store' : 'Create Free Account'}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </Button>
+              </div>
+
+              {/* Quick Demo Helper */}
+              {authMode === 'signin' && (
+                <div className="pt-1 flex items-center justify-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthEmail('shopper@aprilstore.com');
+                      setAuthPassword('Shopper123!');
+                      setAuthError('');
+                    }}
+                    className="text-[11px] text-gray-400 hover:text-gray-700 underline decoration-dotted transition-colors cursor-pointer"
+                  >
+                    Quick Fill Demo Shopper Account
+                  </button>
+                </div>
+              )}
+
+              {/* Switch Mode Footer */}
+              <div className="text-center pt-2 border-t border-gray-100">
+                <p className="text-xs text-gray-500">
+                  {authMode === 'signin' ? "Don't have an account yet?" : 'Already have an account?'}{' '}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthError('');
+                      setAuthMode(authMode === 'signin' ? 'register' : 'signin');
+                    }}
+                    className="text-[#FF5722] font-bold hover:underline cursor-pointer ml-1"
+                  >
+                    {authMode === 'signin' ? 'Create account' : 'Sign in'}
+                  </button>
+                </p>
+              </div>
+
+              {/* Trust & Security Badge */}
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-400 pt-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-gray-400" />
+                <span>Encrypted Authentication powered by Firebase</span>
               </div>
             </form>
           </div>
@@ -336,6 +442,7 @@ export default function AccountPage() {
       </div>
     );
   }
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 space-y-8">
