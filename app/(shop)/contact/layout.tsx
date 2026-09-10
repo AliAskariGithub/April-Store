@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Contact | Client Inquiries & Project Collaboration',
     description:
       'Connect with Syed Ali Askari Zaidi for custom web development, brand design, and engineering collaborations.',
-    url: 'https://aprilstore.vercel.app/contact',
+    url: 'https://aprilstore-one.vercel.app/contact',
   },
 };
 

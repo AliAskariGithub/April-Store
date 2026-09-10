@@ -2,6 +2,7 @@
 
 ![April Store Homepage Showcase](./public/hero-preview.png)
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-aprilstore--one.vercel.app-FF5722?style=for-the-badge&logo=vercel)](https://aprilstore-one.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.2.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -10,7 +11,8 @@
 [![Firebase](https://img.shields.io/badge/Firebase-Firestore_%26_Auth-FFCA28?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-2.5_Flash-8E75B2?style=for-the-badge&logo=google)](https://aistudio.google.com/)
 
-**April Store** is a full-featured, production-ready e-commerce web platform engineered with **Next.js 15 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS v4**. It blends modern fashion aesthetics with machine intelligence powered by **Google Gemini** — offering an interactive AI Style Concierge, semantic product search, and automated multimodal vision verification for bank transfer payment receipts. 
+**April Store** is a full-featured, production-ready e-commerce web platform engineered with **Next.js 15 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS v4**. Live demo: **[aprilstore-one.vercel.app](https://aprilstore-one.vercel.app/)**.
+
 
 The platform features an embedded headless CMS via **Sanity Studio (`/studio`)**, cloud database sync with **Cloud Firestore**, one-click **Google Authentication**, real-time **USD / PKR currency conversion**, and an interactive **dual-slider price filter**.
 

@@ -25,7 +25,7 @@ function getValidSiteUrl(): URL {
       // fallback
     }
   }
-  return new URL('https://aprilstore.vercel.app');
+  return new URL('https://aprilstore-one.vercel.app');
 }
 
 const siteUrlObject = getValidSiteUrl();

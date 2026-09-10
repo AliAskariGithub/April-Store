@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://aprilstore.vercel.app';
+  const baseUrl = 'https://aprilstore-one.vercel.app';
 
   return {
     rules: {
