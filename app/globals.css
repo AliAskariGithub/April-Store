@@ -1,0 +1,183 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #111827;
+  --color-primary-light: #1F2937;
+  --color-primary-dark: #000000;
+  
+  --color-brand-orange: #FF5722;
+  --color-brand-orange-hover: #F4511E;
+  --color-brand-orange-light: #FF8A65;
+  --color-brand-orange-subtle: #FFF3E0;
+
+  --color-accent: #FF5722;
+  --color-accent-amber: #F59E0B;
+  
+  --color-canvas: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-surface-hover: #F3F4F6;
+  --color-card: #FFFFFF;
+
+  --color-border-subtle: #F3F4F6;
+  --color-border-medium: #E5E7EB;
+  --color-border-strong: #D1D5DB;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+
+  --color-error: #EF4444;
+  --color-success: #10B981;
+
+  --font-heading: var(--font-heading), 'Plus Jakarta Sans', sans-serif;
+  --font-body: var(--font-body), 'Plus Jakarta Sans', sans-serif;
+}
+
+:root {
+  --color-primary: #111827;
+  --color-canvas: #FFFFFF;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  font-family: var(--font-body), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #111827;
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern Card with soft shadow and rounded corners */
+.modern-card {
+  border: 1px solid #E5E7EB;
+  background: #FFFFFF;
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.modern-card:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Keyframe animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-slide-up {
+  animation: slideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 300ms ease forwards;
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+/* Dual range slider styles */
+.range-slider-input {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+}
+
+.range-slider-input::-webkit-slider-runnable-track {
+  background: transparent;
+  border: none;
+}
+
+.range-slider-input::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+.range-slider-input::-webkit-slider-thumb {
+  pointer-events: auto;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background-color: #FF5722;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.range-slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background-color: #F4511E;
+}
+
+.range-slider-input::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+  background-color: #E64A19;
+}
+
+.range-slider-input::-moz-range-thumb {
+  pointer-events: auto;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background-color: #FF5722;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.range-slider-input::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  background-color: #F4511E;
+}
+
+.range-slider-input::-moz-range-thumb:active {
+  transform: scale(1.2);
+  background-color: #E64A19;
+}

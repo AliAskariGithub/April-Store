@@ -1,0 +1,6 @@
+{
+  "name": "April Store",
+  "description": "April Store — Discover trending fashion, electronics, beauty, and modern lifestyle essentials with AI styling assistant and fast worldwide delivery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
