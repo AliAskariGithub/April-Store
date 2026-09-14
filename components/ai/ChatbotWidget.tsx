@@ -96,8 +96,8 @@ export function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Concierge Action Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      {/* Floating Concierge Action Button (desktop only; mobile uses bottom navigation bar) */}
+      <div className="fixed bottom-6 right-6 z-40 hidden lg:block">
         {!isChatOpen && (
           <button
             type="button"

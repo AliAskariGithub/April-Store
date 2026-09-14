@@ -91,6 +91,26 @@ body {
   scrollbar-width: none;
 }
 
+/* Custom Filter Sidebar Scrollbar */
+.filter-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #FF5722 #F9FAFB;
+}
+.filter-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.filter-scrollbar::-webkit-scrollbar-track {
+  background: #F9FAFB;
+  border-radius: 9999px;
+}
+.filter-scrollbar::-webkit-scrollbar-thumb {
+  background: #FF5722;
+  border-radius: 9999px;
+}
+.filter-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E64A19;
+}
+
 /* Keyframe animations */
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(12px); }

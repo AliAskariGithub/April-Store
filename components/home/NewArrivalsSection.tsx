@@ -17,7 +17,7 @@ function getProductTimestamp(val: string | { seconds: number; nanoseconds: numbe
 
 export function NewArrivalsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { allProducts } = useProducts();
+  const { allProducts, loading } = useProducts();
 
   // Use dynamic live products (including Sanity/Firestore items) falling back to INITIAL_PRODUCTS, sorted by newest
   const newArrivals = (
@@ -35,7 +35,7 @@ export function NewArrivalsSection() {
   };
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 overflow-hidden">
+    <section id="new-arrivals" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 overflow-hidden scroll-mt-24">
       {/* Header with Title, View All Link, and Carousel Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
@@ -81,19 +81,35 @@ export function NewArrivalsSection() {
 
       {/* Responsive Carousel / Grid Wrapper */}
       <div className="relative w-full overflow-hidden">
-        <div
-          ref={scrollRef}
-          className="flex gap-3 sm:gap-4 lg:gap-5 overflow-x-auto no-scrollbar scroll-smooth pb-3 snap-x snap-mandatory touch-pan-x"
-        >
-          {newArrivals.map((product) => (
-            <div
-              key={product.id}
-              className="w-[160px] sm:w-[220px] md:w-[240px] lg:w-[260px] flex-shrink-0 snap-start"
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+        {loading && (!allProducts || allProducts.length === 0) ? (
+          <div className="flex gap-3 sm:gap-4 lg:gap-5 overflow-x-auto no-scrollbar pb-3">
+            {[1, 2, 3, 4].map((n) => (
+              <div
+                key={n}
+                className="w-[160px] sm:w-[220px] md:w-[240px] lg:w-[260px] flex-shrink-0 bg-white rounded-2xl border border-gray-100 p-3 space-y-3 animate-pulse"
+              >
+                <div className="aspect-[4/5] w-full rounded-xl bg-gray-200" />
+                <div className="h-3 w-1/3 bg-gray-200 rounded" />
+                <div className="h-4 w-3/4 bg-gray-200 rounded" />
+                <div className="h-4 w-1/2 bg-gray-100 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            ref={scrollRef}
+            className="flex gap-3 sm:gap-4 lg:gap-5 overflow-x-auto no-scrollbar scroll-smooth pb-3 snap-x snap-mandatory touch-pan-x"
+          >
+            {newArrivals.map((product) => (
+              <div
+                key={product.id}
+                className="w-[160px] sm:w-[220px] md:w-[240px] lg:w-[260px] flex-shrink-0 snap-start"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

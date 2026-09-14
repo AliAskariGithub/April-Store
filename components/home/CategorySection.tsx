@@ -41,7 +41,7 @@ export function CategorySection() {
   ];
 
   return (
-    <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-24">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">

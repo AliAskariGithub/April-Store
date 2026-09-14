@@ -38,7 +38,10 @@ export interface Address {
 export interface Order {
   id: string;
   userId: string;
+  customerEmail?: string;
+  customerName?: string;
   items: OrderItem[];
+
   subtotal: number;
   shippingFee: number;
   total: number;

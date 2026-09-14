@@ -30,7 +30,7 @@ import { INITIAL_CATEGORIES } from '@/lib/data/categories';
 import { showToast } from '@/components/ui/Toast';
 
 export default function DashboardOverviewPage() {
-  const { orders, changeStatus } = useOrders();
+  const { orders, changeStatus } = useOrders(undefined, true);
   const { allProducts, refreshProducts } = useProducts();
   const { formatPrice, currency } = useCurrencyStore();
 

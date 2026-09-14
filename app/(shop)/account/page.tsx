@@ -284,12 +284,12 @@ export default function AccountPage() {
               <span>Continue with Google</span>
             </button>
 
-            <div className="relative flex items-center justify-center my-2">
-              <div className="border-t border-gray-100 w-full" />
-              <span className="bg-white px-3 text-[11px] text-gray-400 uppercase font-bold tracking-wider">
-                Or with email
+            <div className="relative flex items-center justify-center my-3">
+              <div className="border-t border-gray-200 flex-1" />
+              <span className="bg-white px-3 text-[11px] text-gray-500 uppercase font-bold tracking-wider shrink-0 whitespace-nowrap">
+                OR WITH EMAIL
               </span>
-              <div className="border-t border-gray-100 w-full" />
+              <div className="border-t border-gray-200 flex-1" />
             </div>
 
             <form onSubmit={handleInlineAuth} className="space-y-3.5">

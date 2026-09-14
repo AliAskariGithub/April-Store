@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminOrdersPage() {
-  const { orders, refreshOrders, loading, deleteOrder } = useOrders();
+  const { orders, refreshOrders, loading, deleteOrder } = useOrders(undefined, true);
   const { formatPrice, currency } = useCurrencyStore();
 
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);

@@ -129,93 +129,100 @@ function ProductsContent() {
   ].filter(Boolean).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-10 space-y-4 sm:space-y-6">
       {/* Top Banner Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-gray-100">
-        <div className="text-left">
-          <span className="text-xs font-bold text-[#FF5722] uppercase tracking-wider">
-            Explore Collection
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mt-1">
-            {getCategoryTitle()}
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1">
-            Showing <strong className="text-gray-900">{products.length}</strong> {products.length === 1 ? 'item' : 'items'}
-            {filters.sort && filters.sort !== 'newest' && (
-              <span className="ml-1 text-gray-600 font-medium">
-                • Sorted by <strong className="text-gray-900">{currentSortLabel}</strong>
-              </span>
-            )}
-          </p>
-        </div>
-
-        {/* Sort and Mobile Filter Toggle */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Mobile Filter Button */}
-          <Button
-            id="mobile-filter-button"
-            variant="outline"
-            size="md"
-            onClick={() => setFilterDrawerOpen(true)}
-            className="lg:hidden flex items-center gap-2 rounded-xl cursor-pointer"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-[#FF5722]" />
-            <span>Filter</span>
-            {activeFiltersCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-[#FF5722] text-white text-[11px] font-bold flex items-center justify-center">
-                {activeFiltersCount}
-              </span>
-            )}
-          </Button>
-
-          {/* Desktop/Tablet Segmented Sort By Options */}
-          <div
-            id="sort-by-segmented-group"
-            className="hidden sm:flex items-center gap-1 bg-gray-100/90 p-1 rounded-xl border border-gray-200/70"
-          >
-            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider px-2 flex items-center gap-1">
-              <ArrowUpDown className="w-3 h-3 text-gray-400" />
-              Sort By:
-            </span>
-            {SORT_OPTIONS.map((option) => {
-              const isSelected = (filters.sort || 'newest') === option.id;
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  id={`sort-btn-${option.id}`}
-                  onClick={() => handleSortChange(option.id)}
-                  className={cn(
-                    'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap',
-                    isSelected
-                      ? 'bg-white text-[#FF5722] shadow-xs font-bold'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
-                  )}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
+      <div className="pb-4 sm:pb-6 border-b border-gray-100">
+        {/* Mobile Compact Top Bar: Title + Count on Left, Filter + Sort on Right */}
+        <div className="sm:hidden flex items-center justify-between gap-2">
+          <div className="text-left min-w-0 flex-1">
+            <h1 className="text-base font-extrabold text-gray-900 tracking-tight truncate">
+              {getCategoryTitle()}
+            </h1>
+            <p className="text-[11px] text-gray-500 font-medium">
+              <strong className="text-gray-900">{products.length}</strong> items
+              {filters.sort && filters.sort !== 'newest' && (
+                <span className="text-gray-500 font-normal"> • {currentSortLabel}</span>
+              )}
+            </p>
           </div>
 
-          {/* Mobile / Compact Sort Dropdown */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Mobile Filter Button */}
+            <button
+              type="button"
+              id="mobile-filter-button"
+              onClick={() => setFilterDrawerOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-xs font-semibold text-gray-800 shadow-2xs active:bg-gray-50 cursor-pointer"
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#FF5722]" />
+              <span>Filter</span>
+              {activeFiltersCount > 0 && (
+                <span className="w-4 h-4 rounded-full bg-[#FF5722] text-white text-[10px] font-bold flex items-center justify-center">
+                  {activeFiltersCount}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Sort Dropdown */}
+            <div
+              id="mobile-sort-dropdown-container"
+              className="flex items-center gap-1 bg-white border border-gray-200 hover:border-[#FF5722]/40 rounded-lg px-2.5 py-1.5 text-xs font-semibold shadow-2xs transition-all"
+            >
+              <ArrowUpDown className="w-3 h-3 text-[#FF5722]" />
+              <select
+                id="mobile-sort-select"
+                value={filters.sort || 'newest'}
+                onChange={(e) => handleSortChange(e.target.value as SortOption)}
+                className="bg-transparent focus:outline-none cursor-pointer text-gray-900 text-xs font-bold"
+                aria-label="Sort By"
+              >
+                {SORT_OPTIONS.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop / Tablet Spacious Header */}
+        <div className="hidden sm:flex sm:items-end justify-between gap-4">
+          <div className="text-left">
+            <span className="text-xs font-bold text-[#FF5722] uppercase tracking-wider">
+              Explore Collection
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mt-1">
+              {getCategoryTitle()}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              Showing <strong className="text-gray-900">{products.length}</strong> {products.length === 1 ? 'item' : 'items'}
+              {filters.sort && filters.sort !== 'newest' && (
+                <span className="ml-1 text-gray-600 font-medium">
+                  • Sorted by <strong className="text-gray-900">{currentSortLabel}</strong>
+                </span>
+              )}
+            </p>
+          </div>
+
+          {/* Desktop Dropdown Sort Control */}
           <div
-            id="mobile-sort-dropdown-container"
-            className="sm:hidden flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold shadow-2xs"
+            id="desktop-sort-dropdown-container"
+            className="flex items-center gap-2.5 bg-white border border-gray-200/90 hover:border-[#FF5722]/50 rounded-xl px-3.5 py-2 text-xs font-semibold shadow-2xs transition-all"
           >
-            <label htmlFor="mobile-sort-select" className="text-gray-500 font-bold whitespace-nowrap flex items-center gap-1">
-              <ArrowUpDown className="w-3.5 h-3.5 text-gray-600" />
-              <span>Sort:</span>
-            </label>
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5 shrink-0">
+              <ArrowUpDown className="w-3.5 h-3.5 text-[#FF5722]" />
+              Sort By:
+            </span>
             <select
-              id="mobile-sort-select"
+              id="desktop-sort-select"
               value={filters.sort || 'newest'}
               onChange={(e) => handleSortChange(e.target.value as SortOption)}
-              className="bg-transparent focus:outline-none cursor-pointer text-gray-900 font-bold"
-              aria-label="Sort By"
+              className="bg-transparent focus:outline-none cursor-pointer text-gray-900 text-xs font-bold pr-2"
+              aria-label="Sort Products"
             >
               {SORT_OPTIONS.map((opt) => (
-                <option key={opt.id} value={opt.id}>
+                <option key={opt.id} value={opt.id} className="text-gray-900 py-1">
                   {opt.label}
                 </option>
               ))}
@@ -290,8 +297,8 @@ function ProductsContent() {
 
       {/* Main Layout Grid: Desktop Sidebar + Product Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-        {/* Desktop Sidebar Filters */}
-        <div className="hidden lg:block lg:col-span-1 sticky top-28 bg-white border border-gray-100 rounded-2xl p-5 shadow-xs">
+        {/* Desktop Sidebar Filters with colored background and scrollbar */}
+        <div className="hidden lg:block lg:col-span-1 sticky top-28 bg-gradient-to-b from-[#FFF8F5] via-[#FFF5EF] to-white border border-[#FF8A65]/30 rounded-2xl p-5 shadow-xs filter-scrollbar overflow-y-auto max-h-[calc(100vh-140px)] pr-2.5">
           <ProductFilters
             filters={filters}
             onChange={handleFiltersChange}
@@ -332,9 +339,51 @@ function ProductsContent() {
   );
 }
 
+function ProductsPageSkeleton() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-10 space-y-6 animate-pulse">
+      {/* Header Skeleton */}
+      <div className="pb-4 sm:pb-6 border-b border-gray-100 flex items-center justify-between">
+        <div className="space-y-2">
+          <div className="h-4 w-28 bg-gray-200 rounded" />
+          <div className="h-8 w-48 bg-gray-200 rounded" />
+          <div className="h-3 w-32 bg-gray-200 rounded" />
+        </div>
+        <div className="h-9 w-32 bg-gray-200 rounded-xl" />
+      </div>
+
+      {/* Grid Layout Skeleton */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        {/* Sidebar Skeleton */}
+        <div className="hidden lg:block lg:col-span-1 bg-gradient-to-b from-[#FFF8F5] to-white border border-[#FF8A65]/30 rounded-2xl p-5 space-y-4">
+          <div className="h-5 w-24 bg-gray-200 rounded" />
+          <div className="space-y-2 pt-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="h-4 w-full bg-gray-200 rounded" />
+            ))}
+          </div>
+          <div className="h-20 bg-gray-200 rounded-xl mt-4" />
+        </div>
+
+        {/* Product Cards Skeleton Grid */}
+        <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3.5 sm:gap-5 lg:gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex flex-col bg-white p-3.5 rounded-2xl border border-gray-100 space-y-3">
+              <div className="aspect-square w-full rounded-xl bg-gray-100" />
+              <div className="h-4 w-3/4 bg-gray-200 rounded" />
+              <div className="h-3 w-1/2 bg-gray-200 rounded" />
+              <div className="h-5 w-1/3 bg-gray-200 rounded" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="py-20 text-center text-sm text-gray-500">Loading catalog...</div>}>
+    <Suspense fallback={<ProductsPageSkeleton />}>
       <ProductsContent />
     </Suspense>
   );

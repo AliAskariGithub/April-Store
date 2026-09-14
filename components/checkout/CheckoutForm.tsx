@@ -12,16 +12,19 @@ import { PaymentMethodSelector } from './PaymentMethodSelector';
 import { ReceiptUpload } from './ReceiptUpload';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
+import { useUIStore } from '@/store/uiStore';
 import { createOrder } from '@/lib/firebase/firestore';
 import { showToast } from '@/components/ui/Toast';
 import { ReceiptVerification } from '@/types/ai';
-import { Lock, ArrowRight } from 'lucide-react';
+import { Lock, ArrowRight, UserCheck, AlertCircle } from 'lucide-react';
 
 export function CheckoutForm() {
   const router = useRouter();
   const { items, subtotal, shippingFee, total, clearCart } = useCart();
   const { user } = useAuth();
+  const { openAuthModal } = useUIStore();
   const [submitting, setSubmitting] = useState(false);
+
   const [receiptImage, setReceiptImage] = useState<string>('');
   const [receiptVerification, setReceiptVerification] = useState<ReceiptVerification | null>(null);
 
@@ -58,6 +61,12 @@ export function CheckoutForm() {
   });
 
   const onSubmit = async (data: CheckoutFormData) => {
+    if (!user) {
+      showToast.error('Sign In Required', 'Please sign in or create an account to place and save your order.');
+      openAuthModal('signin');
+      return;
+    }
+
     if (items.length === 0) {
       showToast.error('Cart is empty', 'Please add items before checking out.');
       return;
@@ -81,7 +90,9 @@ export function CheckoutForm() {
       }));
 
       const created = await createOrder({
-        userId: user?.uid || 'guest-user',
+        userId: user.uid,
+        customerEmail: user.email || undefined,
+        customerName: user.displayName || data.fullName,
         items: orderItems,
         subtotal,
         shippingFee: subtotal >= 50000 ? 0 : shippingFee,
@@ -118,6 +129,40 @@ export function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left">
+      {!user && (
+        <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-600 shrink-0">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold font-spartan uppercase tracking-wider text-amber-900">
+                Sign In Required to Place Order
+              </h4>
+              <p className="text-xs text-amber-700/90 mt-0.5">
+                Orders must be linked to a verified account to save tracking and receipt records.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+            <button
+              type="button"
+              onClick={() => openAuthModal('signin')}
+              className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold text-white bg-[#FF5722] hover:bg-[#F4511E] rounded-xl transition shadow-sm"
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => openAuthModal('register')}
+              className="flex-1 sm:flex-none px-4 py-2 text-xs font-bold text-gray-700 bg-white hover:bg-gray-50 border border-gray-200 rounded-xl transition shadow-sm"
+            >
+              Create Account
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Shipping Address Section */}
       <div className="space-y-4">
         <h3 className="font-spartan text-[14px] font-extrabold uppercase tracking-[0.1em] text-[#121212] pb-2 border-b border-[#121212]">
@@ -217,7 +262,7 @@ export function CheckoutForm() {
         >
           <span className="flex items-center gap-2">
             <Lock className="w-4 h-4" />
-            <span>Place Order Now</span>
+            <span>{user ? 'Place Order Now' : 'Sign In to Place Order'}</span>
           </span>
           <ArrowRight className="w-4 h-4" />
         </Button>

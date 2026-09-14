@@ -12,6 +12,7 @@ import { getReviews, addReview } from '@/lib/firebase/firestore';
 import { formatDate } from '@/lib/utils/format';
 import { showToast } from '@/components/ui/Toast';
 import { useAuth } from '@/hooks/useAuth';
+import { useUIStore } from '@/store/uiStore';
 
 export interface ProductReviewsProps {
   productId: string;
@@ -20,6 +21,7 @@ export interface ProductReviewsProps {
 
 export function ProductReviews({ productId, productName }: ProductReviewsProps) {
   const { user } = useAuth();
+  const { openAuthModal } = useUIStore();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [, setLoading] = useState(true);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
@@ -30,6 +32,15 @@ export function ProductReviews({ productId, productName }: ProductReviewsProps) 
   const [body, setBody] = useState('');
   const [size, setSize] = useState('M');
   const [submitting, setSubmitting] = useState(false);
+
+  const handleOpenWriteModal = () => {
+    if (!user) {
+      showToast.error('Sign In Required', 'Please sign in or create an account to leave a verified review.');
+      openAuthModal('signin');
+      return;
+    }
+    setIsWriteModalOpen(true);
+  };
 
   const fetchProductReviews = React.useCallback(async () => {
     try {
@@ -63,6 +74,12 @@ export function ProductReviews({ productId, productName }: ProductReviewsProps) 
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      showToast.error('Sign In Required', 'Please sign in or create an account to leave a verified review.');
+      openAuthModal('signin');
+      return;
+    }
+
     if (!title.trim() || !body.trim()) {
       showToast.error('Incomplete Review', 'Please provide a title and detailed review.');
       return;
@@ -72,8 +89,8 @@ export function ProductReviews({ productId, productName }: ProductReviewsProps) 
     try {
       await addReview({
         productId,
-        userId: user?.uid || 'guest-user',
-        userDisplayName: user?.displayName || 'NovaTrend Customer',
+        userId: user.uid,
+        userDisplayName: user.displayName || user.email?.split('@')[0] || 'Verified Customer',
         rating,
         title,
         body,
@@ -119,7 +136,7 @@ export function ProductReviews({ productId, productName }: ProductReviewsProps) 
         <Button
           variant="outline"
           size="md"
-          onClick={() => setIsWriteModalOpen(true)}
+          onClick={handleOpenWriteModal}
           className="flex items-center gap-2 rounded-xl self-start sm:self-auto"
         >
           <Plus className="w-4 h-4 text-[#FF5722]" />

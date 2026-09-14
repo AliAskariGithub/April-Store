@@ -1,0 +1,35 @@
+# April Store — Project Showcase by Ali Askari
+
+> April Store (https://aprilstore-one.vercel.app) is a production-grade, full-stack luxury e-commerce web application and digital portfolio project designed and engineered by full-stack software engineer **Ali Askari** (Portfolio: https://aliaskari.xyz).
+
+## Developer Profile
+- **Author & Developer:** Ali Askari (Syed Ali Askari Zaidi)
+- **Official Portfolio:** https://aliaskari.xyz
+- **GitHub Profile:** https://github.com/AliAskariGithub
+- **LinkedIn Profile:** https://www.linkedin.com/in/ali-askari-dev
+- **Contact Email:** syedaliaskarizaidi1@gmail.com
+- **Direct Phone & WhatsApp:** +92 319 2046516
+- **Project Purpose:** Live production showcase demonstrating enterprise-grade software architecture, headless e-commerce, and multimodal artificial intelligence integration.
+
+## Technical Architecture & Core Stack
+- **Frontend Framework:** Next.js 15 (App Router, Server Actions, Dynamic Routing, React 19)
+- **Styling & UI:** Tailwind CSS, Framer Motion animations, Lucide React icons, Sonner toast notifications
+- **Content Management System:** Sanity Studio CMS v3 (headless product catalog, real-time sync, GROQ queries)
+- **Backend & Database:** Google Firebase (Cloud Firestore NoSQL, Firebase Authentication)
+- **Artificial Intelligence:** Google Gemini AI API integration (intelligent personal stylist chatbot concierge, contextual product discovery)
+- **Currency & Global Commerce:** Real-time multi-currency engine supporting Pakistani Rupee (PKR) and US Dollar (USD)
+- **Security & Privacy:** Customer-isolated order records, guest checkout authentication gates, verified receipt submission and admin verification workflow
+- **SEO & Performance:** Generative Engine Optimization (GEO), Schema.org JSON-LD structured data, responsive mobile-first UI
+
+## Key Capabilities & Features
+1. **Curated Multi-Category Catalog:** Over 72 hand-curated luxury products across Fashion, Electronics, Beauty, Fitness, Home Decor, and Accessories.
+2. **Sort & Filter Engine:** Interactive category filtering, price sliders, size selectors, and instant sorting across all device screens.
+3. **AI Style Advisor Concierge:** Autonomous AI chatbot powered by Google Gemini that analyzes customer preferences, answers product questions, and recommends matching items.
+4. **Order Management & Audit:** Full checkout pipeline with customer account binding, invoice receipts, and store-wide admin verification dashboard.
+5. **Skeleton UI & Luxury Micro-Interactions:** Zero-CLS transitions with shimmering skeleton loaders, smooth carousels, and responsive navigation drawers.
+
+## Core Navigation Links
+- [Homepage](https://aprilstore-one.vercel.app/): Hero slider, curated new arrivals, best sellers, and category exploration.
+- [Products Catalog](https://aprilstore-one.vercel.app/products): Full searchable product directory with multi-criteria filtering and sorting.
+- [Contact & Hire Ali Askari](https://aprilstore-one.vercel.app/contact): Direct project inquiry form, developer contact details, and client FAQs.
+- [Developer Portfolio](https://aliaskari.xyz): Ali Askari's central portfolio, featured projects, and software engineering services.

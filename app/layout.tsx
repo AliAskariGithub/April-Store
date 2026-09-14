@@ -29,7 +29,6 @@ function getValidSiteUrl(): URL {
 }
 
 const siteUrlObject = getValidSiteUrl();
-
 const siteUrl = siteUrlObject.origin;
 
 export const viewport: Viewport = {
@@ -42,26 +41,40 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: siteUrlObject,
   title: {
-    default: 'April Store — Intelligent Modern E-Commerce & Curated Fashion',
-    template: '%s | April Store',
+    default: 'April Store — Modern E-Commerce Showcase by Ali Askari | aliaskari.xyz',
+    template: '%s | April Store — by Ali Askari',
   },
   description:
-    'Discover curated collections across trending fashion, footwear, accessories, audio electronics, and lifestyle decor. Experience AI style recommendations, instant cart checkout, and seamless worldwide shopping.',
+    'April Store is a luxury full-stack e-commerce project showcase architected and built by software engineer Ali Askari (aliaskari.xyz). Powered by Next.js 15, Sanity CMS, Firebase Auth & Firestore, Google Gemini AI shopping assistant, and responsive luxury design.',
   keywords: [
+    // Creator Branding & Portfolio
+    'Ali Askari',
+    'aliaskari.xyz',
+    'Ali Askari portfolio',
+    'Ali Askari developer',
+    'Ali Askari software engineer',
+    'Syed Ali Askari Zaidi',
+    'Ali Askari GitHub',
+    'Ali Askari LinkedIn',
+    // Project Showcase & Engineering
     'April Store',
-    'modern e-commerce',
-    'trending fashion',
-    'streetwear',
-    'curated luxury',
-    'lifestyle goods',
-    'AI stylist concierge',
-    'electronics',
-    'sneakers',
-    'online shopping',
+    'April Store showcase',
+    'full-stack ecommerce portfolio project',
+    'Next.js 15 ecommerce',
+    'React 19 ecommerce web app',
+    'Sanity CMS headless store',
+    'Firebase ecommerce application',
+    'Google Gemini AI shopping assistant',
+    'modern luxury fashion ecommerce',
+    'streetwear online store',
+    'responsive web application showcase',
+    'portfolio showcase project',
   ],
-  authors: [{ name: 'April Store' }],
-  creator: 'April Store',
-  publisher: 'April Store',
+  authors: [{ name: 'Ali Askari', url: 'https://aliaskari.xyz' }],
+  creator: 'Ali Askari (https://aliaskari.xyz)',
+  publisher: 'Ali Askari',
+  category: 'technology',
+  classification: 'Full-Stack Web Engineering & E-Commerce Showcase',
   formatDetection: {
     email: false,
     address: false,
@@ -74,26 +87,27 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'April Store',
-    title: 'April Store — Intelligent Modern E-Commerce & Curated Fashion',
+    siteName: 'April Store — Project Showcase by Ali Askari',
+    title: 'April Store — Modern E-Commerce Showcase by Ali Askari | aliaskari.xyz',
     description:
-      'Discover curated collections across trending fashion, footwear, accessories, audio electronics, and lifestyle decor with smart AI styling.',
+      'Explore April Store, a high-performance luxury e-commerce application crafted by Ali Askari (aliaskari.xyz) featuring Next.js 15, Sanity CMS, Firebase, and Gemini AI styling.',
     images: [
       {
         url: '/hero-preview.png',
         width: 1280,
         height: 720,
-        alt: 'April Store — Modern E-Commerce Showcase',
+        alt: 'April Store — Full-Stack E-Commerce Project Showcase by Ali Askari (aliaskari.xyz)',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'April Store — Intelligent Modern E-Commerce & Curated Fashion',
+    title: 'April Store — Modern E-Commerce Showcase by Ali Askari | aliaskari.xyz',
     description:
-      'Discover curated collections across trending fashion, accessories, and modern essentials with Google Gemini AI shopping assistance.',
+      'Production-grade e-commerce application crafted by Ali Askari (aliaskari.xyz) using Next.js 15, Sanity CMS, Firebase, and Gemini AI.',
     images: ['/hero-preview.png'],
     creator: '@AliAskariGithub',
+    site: '@AliAskariGithub',
   },
   robots: {
     index: true,
@@ -111,6 +125,22 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
+  verification: {
+    google:
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+      process.env.GOOGLE_SITE_VERIFICATION ||
+      'r2WPUKMX4DZTyfc_JaPMa1b8Skk5M1OdUwGDWxDZ1to',
+  },
+  other: {
+    author: 'Ali Askari',
+    developer: 'Ali Askari',
+    portfolio: 'https://aliaskari.xyz',
+    'ai:creator': 'Ali Askari',
+    'ai:portfolio': 'https://aliaskari.xyz',
+    'ai:project_type': 'portfolio-showcase',
+    'ai:description':
+      'April Store is a full-stack luxury e-commerce showcase developed by Ali Askari (https://aliaskari.xyz) with Next.js 15, Sanity CMS, Firebase, and Google Gemini AI.',
+  },
 };
 
 export default function RootLayout({
@@ -118,7 +148,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Schema.org JSON-LD Structured Data
+  // Schema.org JSON-LD Structured Data with Creator & Portfolio Attribution
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -126,8 +156,18 @@ export default function RootLayout({
         '@type': 'WebSite',
         '@id': `${siteUrl}/#website`,
         url: siteUrl,
-        name: 'April Store',
-        description: 'Intelligent Modern E-Commerce & Curated Lifestyle Collections',
+        name: 'April Store — Project Showcase by Ali Askari',
+        description: 'Production-grade full-stack e-commerce application engineered by Ali Askari (aliaskari.xyz)',
+        author: {
+          '@type': 'Person',
+          '@id': 'https://aliaskari.xyz/#person',
+          name: 'Ali Askari',
+          url: 'https://aliaskari.xyz',
+        },
+        creator: {
+          '@type': 'Person',
+          '@id': 'https://aliaskari.xyz/#person',
+        },
         potentialAction: {
           '@type': 'SearchAction',
           target: `${siteUrl}/products?q={search_term_string}`,
@@ -135,18 +175,48 @@ export default function RootLayout({
         },
       },
       {
-        '@type': 'Organization',
-        '@id': `${siteUrl}/#organization`,
+        '@type': 'Person',
+        '@id': 'https://aliaskari.xyz/#person',
+        name: 'Ali Askari',
+        alternateName: 'Syed Ali Askari Zaidi',
+        url: 'https://aliaskari.xyz',
+        jobTitle: 'Full-Stack Software Engineer & Web Developer',
+        email: 'syedaliaskarizaidi1@gmail.com',
+        telephone: '+92 319 2046516',
+        sameAs: [
+          'https://aliaskari.xyz',
+          'https://github.com/AliAskariGithub',
+          'https://www.linkedin.com/in/ali-askari-dev',
+          'https://www.instagram.com/syedaliaskarizaidi__/',
+          'https://www.facebook.com/profile.php?id=61564881342854',
+        ],
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': `${siteUrl}/#software`,
         name: 'April Store',
         url: siteUrl,
-        logo: `${siteUrl}/hero-preview.png`,
-        contactPoint: {
-          '@type': 'ContactPoint',
-          telephone: '+1-800-555-0199',
-          contactType: 'customer service',
-          areaServed: 'Worldwide',
-          availableLanguage: ['English'],
+        applicationCategory: 'E-Commerce Showcase Application',
+        operatingSystem: 'All modern web browsers',
+        author: {
+          '@type': 'Person',
+          '@id': 'https://aliaskari.xyz/#person',
         },
+        creator: {
+          '@type': 'Person',
+          '@id': 'https://aliaskari.xyz/#person',
+        },
+        description:
+          'Full-stack luxury e-commerce portfolio application showcasing Next.js 15 App Router, Sanity CMS, Firebase, and Google Gemini AI assistance.',
+        featureList: [
+          'Next.js 15 App Router with React 19',
+          'Sanity Studio CMS headless content management',
+          'Firebase Authentication & Cloud Firestore',
+          'Google Gemini AI intelligent style assistant chatbot',
+          'Multi-currency converter (PKR/USD)',
+          'Customer receipt verification & admin audit portal',
+          'Zero-CLS skeleton UI loaders and responsive luxury design',
+        ],
       },
       {
         '@type': 'Store',
@@ -169,7 +239,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-[#FFFFFF] text-[#111827] flex flex-col font-sans selection:bg-[#FF5722] selection:text-white">
+      <body className="min-h-screen bg-[#FFFFFF] text-[#111827] flex flex-col font-sans selection:bg-[#FF5722] selection:text-white pb-16 lg:pb-0">
         {/* Global Toast Notifications Provider */}
         <Toaster position="top-right" richColors />
 

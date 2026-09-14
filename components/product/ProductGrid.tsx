@@ -17,13 +17,29 @@ export interface ProductGridProps {
 export function ProductGrid({ products, loading, onResetFilters }: ProductGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3.5 sm:gap-5 lg:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3.5 sm:gap-5 lg:gap-6 animate-pulse">
         {Array.from({ length: 9 }).map((_, i) => (
-          <div key={i} className="flex flex-col space-y-3 bg-white p-3.5 rounded-2xl border border-gray-100">
-            <Skeleton className="aspect-square w-full rounded-xl" />
-            <Skeleton className="h-4 w-3/4 rounded" />
-            <Skeleton className="h-3 w-1/2 rounded" />
-            <Skeleton className="h-4 w-1/3 rounded" />
+          <div key={i} className="flex flex-col bg-white p-3.5 rounded-2xl border border-gray-100 shadow-2xs space-y-3">
+            {/* Image placeholder with badge & wishlist icons */}
+            <div className="relative aspect-square w-full rounded-xl bg-gray-100 overflow-hidden">
+              <div className="absolute top-2 left-2 w-10 h-4 rounded bg-gray-200" />
+              <div className="absolute top-2 right-2 w-7 h-7 rounded-full bg-gray-200" />
+            </div>
+            {/* Title & Category */}
+            <div className="space-y-1.5 pt-1">
+              <Skeleton className="h-3 w-1/4 rounded bg-gray-200" />
+              <Skeleton className="h-4 w-5/6 rounded bg-gray-200" />
+            </div>
+            {/* Rating Stars */}
+            <div className="flex items-center gap-1">
+              <div className="w-16 h-3 rounded bg-gray-200" />
+              <div className="w-8 h-3 rounded bg-gray-200 ml-1" />
+            </div>
+            {/* Price & Action Button */}
+            <div className="pt-2 flex items-center justify-between gap-2 border-t border-gray-50">
+              <Skeleton className="h-5 w-1/3 rounded bg-gray-200" />
+              <Skeleton className="h-8 w-20 rounded-xl bg-gray-200" />
+            </div>
           </div>
         ))}
       </div>

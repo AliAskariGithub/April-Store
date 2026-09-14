@@ -5,25 +5,25 @@ import { useState, useEffect, useCallback } from 'react';
 import { Order, OrderStatus } from '@/types/order';
 import { getOrders, updateOrderStatus, updateOrderReceiptVerification, deleteOrder as deleteOrderDb } from '@/lib/firebase/firestore';
 
-export function useOrders(userId?: string) {
+export function useOrders(userId?: string, forAdmin: boolean = false) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getOrders(userId);
+      const data = await getOrders(userId, forAdmin);
       setOrders(data || []);
     } catch (err) {
       console.error('Failed to load orders:', err);
     } finally {
       setLoading(false);
     }
-  }, [userId]);
+  }, [userId, forAdmin]);
 
   useEffect(() => {
     let ignore = false;
-    getOrders(userId)
+    getOrders(userId, forAdmin)
       .then((data) => {
         if (!ignore) {
           setOrders(data || []);
@@ -38,7 +38,7 @@ export function useOrders(userId?: string) {
     return () => {
       ignore = true;
     };
-  }, [userId]);
+  }, [userId, forAdmin]);
 
   const changeStatus = async (orderId: string, status: OrderStatus, note?: string) => {
     await updateOrderStatus(orderId, status, note);

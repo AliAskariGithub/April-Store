@@ -29,14 +29,38 @@ import { calculateDiscount } from '@/lib/utils/helpers';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { showToast } from '@/components/ui/Toast';
 import { getTotalStock } from '@/types/product';
+import { ProductDetailSkeleton } from '@/components/product/ProductDetailSkeleton';
+import { SLUG_ALIASES } from '@/lib/firebase/firestore';
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const slug = params?.slug as string;
-  const { allProducts } = useProducts();
+  const rawSlug = params?.slug as string;
+  const { allProducts, loading } = useProducts();
   const { formatPrice, currency } = useCurrencyStore();
 
-  const product = allProducts.find((p) => p.slug === slug);
+  const product = React.useMemo(() => {
+    if (!allProducts || allProducts.length === 0 || !rawSlug) return null;
+    const decoded = decodeURIComponent(rawSlug).trim();
+    const alias = SLUG_ALIASES[decoded] || SLUG_ALIASES[decoded.toLowerCase()] || decoded;
+
+    // 1. Exact slug
+    let found = allProducts.find((p) => p.slug === alias || p.slug === decoded);
+    if (found) return found;
+
+    // 2. Case-insensitive slug
+    found = allProducts.find((p) => p.slug?.toLowerCase() === alias.toLowerCase());
+    if (found) return found;
+
+    // 3. Match ID
+    found = allProducts.find((p) => p.id === alias || p.id === decoded);
+    if (found) return found;
+
+    // 4. Partial slug match
+    found = allProducts.find((p) => p.slug && (p.slug.includes(alias) || alias.includes(p.slug)));
+    if (found) return found;
+
+    return null;
+  }, [allProducts, rawSlug]);
 
   const [selectedSize, setSelectedSize] = useState<string>(product?.sizes?.[0] || 'M');
 
@@ -54,6 +78,11 @@ export default function ProductDetailPage() {
 
   const { isInWishlist, toggleWishlist } = useWishlistStore();
   const isWishlisted = product ? isInWishlist(product.id) : false;
+
+  // Show skeleton UI while product is loading
+  if (loading && !product) {
+    return <ProductDetailSkeleton />;
+  }
 
   if (!product) {
     return (

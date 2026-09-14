@@ -110,24 +110,37 @@ export default function OrderDetailPage() {
           </p>
         </div>
 
-        {/* Tracking Number Pill */}
-        {order.trackingNumber && (
-          <div className="flex items-center gap-2 bg-[#F9F9F7] border border-[#D8D6CE] p-2.5 rounded-[10px]">
-            <Truck className="w-4 h-4 text-[#024E44]" />
-            <div className="text-[12px] font-sans">
-              <span className="text-[#9E9C93] block leading-none">Courier Consignment:</span>
-              <span className="font-mono font-bold text-[#0A0A0A]">{order.trackingNumber}</span>
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Tracking Number Pill */}
+          {order.trackingNumber && (
+            <div className="flex items-center gap-2 bg-[#F9F9F7] border border-[#D8D6CE] p-2.5 rounded-[10px]">
+              <Truck className="w-4 h-4 text-[#024E44]" />
+              <div className="text-[12px] font-sans">
+                <span className="text-[#9E9C93] block leading-none">Courier Consignment:</span>
+                <span className="font-mono font-bold text-[#0A0A0A]">{order.trackingNumber}</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyTracking}
+                className="ml-2 p-1 text-[#9E9C93] hover:text-[#024E44] transition-colors cursor-pointer"
+                title="Copy tracking"
+              >
+                {copiedTracking ? <Check className="w-3.5 h-3.5 text-[#1A7A4A]" /> : <Copy className="w-3.5 h-3.5" />}
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={handleCopyTracking}
-              className="ml-2 p-1 text-[#9E9C93] hover:text-[#024E44] transition-colors cursor-pointer"
-              title="Copy tracking"
-            >
-              {copiedTracking ? <Check className="w-3.5 h-3.5 text-[#1A7A4A]" /> : <Copy className="w-3.5 h-3.5" />}
-            </button>
-          </div>
-        )}
+          )}
+
+          <Link href="/products">
+            <Button variant="primary" size="md" className="bg-[#FF5722] hover:bg-[#F4511E] text-white rounded-xl shadow-xs">
+              Continue Shopping
+            </Button>
+          </Link>
+          <Link href="/orders">
+            <Button variant="outline" size="md" className="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl">
+              All Orders
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -268,6 +281,28 @@ export default function OrderDetailPage() {
               )}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Bottom Post-Order Action Banner */}
+      <div className="bg-[#FFF9F6] border border-[#FF5722]/30 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 className="font-bold text-gray-900 text-base">Your Order Has Been Confirmed!</h3>
+          <p className="text-xs text-gray-600 mt-0.5">
+            Thank you for shopping with April Store. You can monitor courier tracking updates here or discover more trending pieces.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
+          <Link href="/products" className="flex-1 sm:flex-none">
+            <Button variant="primary" size="md" className="w-full bg-[#FF5722] hover:bg-[#F4511E] text-white rounded-xl shadow-xs">
+              Continue Shopping
+            </Button>
+          </Link>
+          <Link href="/orders" className="flex-1 sm:flex-none">
+            <Button variant="outline" size="md" className="w-full border-gray-300 text-gray-700 hover:bg-white rounded-xl">
+              View All Orders
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -5,14 +5,16 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useOrders } from '@/hooks/useOrders';
 import { useAuth } from '@/hooks/useAuth';
+import { useUIStore } from '@/store/uiStore';
 import { OrderCard } from '@/components/order/OrderCard';
 import { Button } from '@/components/ui/Button';
-import { ShoppingBag, Search } from 'lucide-react';
+import { ShoppingBag, Search, Lock, LogIn, UserPlus } from 'lucide-react';
 import { Spinner } from '@/components/ui/Spinner';
 
 export default function OrdersPage() {
   const { user } = useAuth();
-  const { orders, loading } = useOrders(user?.uid);
+  const { openAuthModal } = useUIStore();
+  const { orders, loading } = useOrders(user?.uid, false);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -88,6 +90,42 @@ export default function OrdersPage() {
         <div className="py-20 text-center">
           <Spinner size="lg" color="primary" />
           <p className="text-[13px] font-spartan font-bold uppercase tracking-[0.06em] text-[#8E8A83] mt-3">Accessing archival order records...</p>
+        </div>
+      ) : !user ? (
+        <div className="py-16 text-center bg-[#FFF8F6] border border-[#FF5722]/30 rounded-2xl p-8 max-w-xl mx-auto space-y-5 shadow-xs">
+          <div className="w-16 h-16 rounded-2xl bg-[#FF5722]/10 text-[#FF5722] flex items-center justify-center mx-auto">
+            <Lock className="w-8 h-8" strokeWidth={1.8} />
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-spartan text-xl font-bold uppercase tracking-tight text-gray-900">
+              Sign In to View Your Orders
+            </h3>
+            <p className="text-sm text-gray-600 max-w-md mx-auto leading-relaxed">
+              Order dossiers, payment receipts, and real-time courier tracking credentials are encrypted and linked exclusively to your account.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <Button
+              type="button"
+              variant="primary"
+              size="md"
+              onClick={() => openAuthModal('signin')}
+              className="w-full sm:w-auto bg-[#FF5722] hover:bg-[#F4511E] text-white rounded-xl flex items-center gap-2 px-6"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In with Email</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              onClick={() => openAuthModal('register')}
+              className="w-full sm:w-auto border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl flex items-center gap-2 px-6"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Create Account</span>
+            </Button>
+          </div>
         </div>
       ) : filteredOrders.length === 0 ? (
         <div className="py-20 text-center rounded-none bg-[#FAF8F5] border border-[#121212] p-8 max-w-lg mx-auto space-y-4">

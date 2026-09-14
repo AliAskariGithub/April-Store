@@ -12,6 +12,7 @@ import {
   Facebook, 
   Instagram, 
   Github, 
+  Globe,
   ArrowRight,
   Sparkles
 } from 'lucide-react';
@@ -36,9 +37,19 @@ export function Footer() {
 
   const socialLinks = [
     {
+      name: 'Portfolio',
+      href: 'https://aliaskari.xyz',
+      icon: Globe,
+    },
+    {
       name: 'LinkedIn',
       href: 'https://www.linkedin.com/in/ali-askari-dev',
       icon: Linkedin,
+    },
+    {
+      name: 'GitHub',
+      href: 'https://github.com/AliAskariGithub',
+      icon: Github,
     },
     {
       name: 'Facebook',
@@ -49,11 +60,6 @@ export function Footer() {
       name: 'Instagram',
       href: 'https://www.instagram.com/syedaliaskarizaidi__/',
       icon: Instagram,
-    },
-    {
-      name: 'GitHub',
-      href: 'https://github.com/AliAskariGithub',
-      icon: Github,
     },
   ];
 
@@ -212,27 +218,33 @@ export function Footer() {
           {/* Column 4: About / Company */}
           <div className="space-y-3">
             <h4 className="text-xs sm:text-sm font-bold text-gray-900 tracking-tight">
-              About
+              About & Portfolio
             </h4>
             <ul className="space-y-2 text-xs text-gray-500 font-medium">
               <li>
+                <a
+                  href="https://aliaskari.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#FF5722] transition-colors font-bold text-gray-900 flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#FF5722]" />
+                  <span>Developer Portfolio (aliaskari.xyz)</span>
+                </a>
+              </li>
+              <li>
                 <Link href="/contact" className="hover:text-[#FF5722] transition-colors">
-                  About April Store
+                  Project Case Study & Tech
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-[#FF5722] transition-colors">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact#shipping" className="hover:text-[#FF5722] transition-colors">
-                  Shipping & Returns
+                  Hire Ali Askari
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-[#FF5722] transition-colors">
-                  Contact Us
+                  Contact Developer
                 </Link>
               </li>
               <li>
@@ -280,12 +292,29 @@ export function Footer() {
 
       </div>
 
-      {/* 3. Bottom Dark Copyright Strip matching reference */}
+      {/* 3. Bottom Dark Copyright & Developer Attribution Strip */}
       <div className="bg-[#18181B] text-gray-400 text-xs py-4 px-4 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p>© Copyright {new Date().getFullYear()} April Store. All rights reserved.</p>
-          <p className="text-[11px] text-gray-500">
-            Crafted for modern lifestyle & digital retail.
+          <p className="text-xs text-gray-300 flex items-center justify-center sm:justify-end gap-1.5 flex-wrap">
+            <span>Project Showcase Engineered by</span>
+            <a
+              href="https://aliaskari.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-[#FF5722] font-bold transition-colors underline underline-offset-4 decoration-[#FF5722]"
+            >
+              Ali Askari
+            </a>
+            <span className="text-gray-500">•</span>
+            <a
+              href="https://aliaskari.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF5722] hover:text-[#FF8A65] font-semibold transition-colors"
+            >
+              aliaskari.xyz
+            </a>
           </p>
         </div>
       </div>

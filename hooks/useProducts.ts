@@ -28,10 +28,11 @@ export interface FilterOptions {
 
 export function useProducts(initialFilters?: FilterOptions) {
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>(initialFilters || {});
 
   const fetchProducts = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await getProducts();
       if (data && data.length > 0) {
@@ -39,6 +40,8 @@ export function useProducts(initialFilters?: FilterOptions) {
       }
     } catch (err) {
       console.error('Failed to load products:', err);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -50,7 +53,12 @@ export function useProducts(initialFilters?: FilterOptions) {
           setProducts(data);
         }
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        if (!ignore) {
+          setLoading(false);
+        }
+      });
 
     return () => {
       ignore = true;
